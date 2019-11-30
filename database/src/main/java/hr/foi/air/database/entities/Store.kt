@@ -9,5 +9,7 @@ data class Store(
     var id:Int,
     var name:String,
     var description:String,
-    var imgUrl:String
+    var imgUrl:String,
+    var longitude:Long,
+    var latitude:Long
 )
