@@ -1,6 +1,7 @@
 package hr.foi.air.database
 
 import androidx.room.*
+import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
 
 @Dao
@@ -11,9 +12,9 @@ interface DAO {
     @Delete fun deleteStores(vararg stores:Store)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDiscounts(vararg stores:Store)
-    @Update fun updateDiscounts(vararg stores:Store)
-    @Delete fun deleteDiscounts(vararg stores:Store)
+    fun insertDiscounts(vararg discount: Discount)
+    @Update fun updateDiscounts(vararg discounts:Discount)
+    @Delete fun deleteDiscounts(vararg discounts:Discount)
 
     @Query("SELECT * FROM stores")
     fun loadAllStores():List<Store>

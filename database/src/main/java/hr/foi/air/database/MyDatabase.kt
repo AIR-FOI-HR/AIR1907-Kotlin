@@ -26,4 +26,5 @@ public abstract class MyDatabase : RoomDatabase() {
             INSTANCE = null
         }
     }
+    public abstract fun getDao():DAO?
 }

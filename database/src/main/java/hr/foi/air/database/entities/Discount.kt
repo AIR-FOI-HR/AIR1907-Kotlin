@@ -8,14 +8,14 @@ import java.util.*
 @TypeConverters(DateConverter::class)
 data class Discount (
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int = -1,
     @ForeignKey(entity = Store::class, parentColumns = ["id"], childColumns = ["storeId"])
     @ColumnInfo(index = true)
-    val storeId: Int,
-    val name: String,
-    val description: String,
-    val discountValue: Int,
-    val startDate: Date,
-    val endDate: Date
+    var storeId: Int = -1,
+    var name: String = "",
+    val description: String = "",
+    var discountValue: Int = -1,
+    val startDate: Date = Date(),
+    val endDate: Date = Date()
 
     )
