@@ -15,12 +15,13 @@
         android:id="@+id/test_button"
         android:text="@string/test_button"
         tools:ignore="MissingConstraints"/>
+
     <ListView
+        android:id="@+id/discount_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/discount_list"
-        android:layout_below="@+id/test_button"/>
+        android:layout_below="@+id/test_button"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

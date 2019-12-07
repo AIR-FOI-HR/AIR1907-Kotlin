@@ -24,4 +24,7 @@ interface DAO {
 
     @Query("SELECT * FROM stores WHERE name LIKE :name")
     fun loadAllStoreByName(name: String?):List<Store>
+
+    @Query("SELECT name FROM discounts")
+    fun getDiscounts():List<String>
 }

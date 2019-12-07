@@ -3,6 +3,9 @@ package hr.foi.air.discountlocatorkotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.data.MockData
 import hr.foi.air.database.entities.Discount
@@ -16,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         database = MyDatabase.getInstance(this)
         mockData();
+        val button = findViewById<Button>(R.id.test_button)
+
+        val mListView: ListView = findViewById<ListView>(R.id.discount_list)
+
+        button.setOnClickListener{
+            val discounts: List<String>? = database?.getDao()?.getDiscounts()
+            if(!discounts.isNullOrEmpty()) {
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, discounts)
+                mListView.adapter = adapter
+            }
+        }
+
     }
 
     private fun mockData() {
@@ -37,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
 }
