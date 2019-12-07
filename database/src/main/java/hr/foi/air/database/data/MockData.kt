@@ -12,22 +12,21 @@ object MockData {
     fun writeAll(context: Context){
         dao = MyDatabase.getInstance(context)?.getDao()
         val acmeStore:Store = Store()
-        acmeStore?.name = "ACME store"
-        acmeStore?.id = dao?.insertStores(acmeStore) as Int
+        acmeStore.name = "ACME store"
+        acmeStore.id = dao?.insertStores(acmeStore)?.get(0)?.toInt()
 
         val apples:Discount = Discount()
-        apples?.name = "Apples of 10%"
-        apples?.discountValue = 10
-        apples?.storeId = acmeStore.id
+        apples.name = "Apples of 10%"
+        apples.discountValue = 10
+        apples.storeId = acmeStore.id
 
         val tuna:Discount = Discount()
-        tuna?.name = "Three for two"
-        tuna?.discountValue = 33
-        tuna?.storeId = acmeStore.id
+        tuna.name = "Three for two"
+        tuna.discountValue = 33
+        tuna.storeId = acmeStore.id
 
-        dao!!.insertDiscounts(apples, tuna)
-
-
+        dao?.insertDiscounts(apples)
+        dao?.insertDiscounts(tuna)
 
     }
 }

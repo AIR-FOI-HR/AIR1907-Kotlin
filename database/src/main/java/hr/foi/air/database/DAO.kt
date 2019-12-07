@@ -7,12 +7,12 @@ import hr.foi.air.database.entities.Store
 @Dao
 interface DAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertStores(vararg stores:Store)
+    fun insertStores(vararg stores:Store):List<Long>
     @Update fun updateStores(vararg stores:Store)
     @Delete fun deleteStores(vararg stores:Store)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDiscounts(vararg discount: Discount)
+    fun insertDiscounts(vararg discount: Discount):List<Long>
     @Update fun updateDiscounts(vararg discounts:Discount)
     @Delete fun deleteDiscounts(vararg discounts:Discount)
 
@@ -20,8 +20,8 @@ interface DAO {
     fun loadAllStores():List<Store>
 
     @Query("SELECT * FROM discounts WHERE storeId = :storeId")
-    fun loadAllDiscountsByStore(storeId:Int)
+    fun loadAllDiscountsByStore(storeId: Int?):List<Discount>
 
     @Query("SELECT * FROM stores WHERE name LIKE :name")
-    fun loadAllStoreByName(name:String)
+    fun loadAllStoreByName(name: String?):List<Store>
 }
