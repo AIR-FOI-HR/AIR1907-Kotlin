@@ -3,6 +3,7 @@ package hr.foi.air.webservice
 import com.squareup.okhttp.OkHttpClient
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
+import hr.foi.air.webservice.handlers.MyWebserviceHandler
 import hr.foi.air.webservice.responses.MyWebserviceResponse
 import retrofit.*
 import java.lang.Exception
@@ -10,9 +11,12 @@ import java.lang.reflect.Type
 
 class MyWebserviceCaller {
     var retrofit: Retrofit? = null
-    val baseUrl: String = "http://cortex.foi.hr/mtl/courses/air/"
+    private val baseUrl: String = "http://cortex.foi.hr/mtl/courses/air/"
 
-    constructor(){
+    private var myWebserviceHandler: MyWebserviceHandler? = null
+
+    constructor(myWebserviceHandler: MyWebserviceHandler){
+        this.myWebserviceHandler = myWebserviceHandler
         val client: OkHttpClient = OkHttpClient()
 
         retrofit = Retrofit.Builder()
