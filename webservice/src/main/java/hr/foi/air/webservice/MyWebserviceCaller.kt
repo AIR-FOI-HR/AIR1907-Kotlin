@@ -1,5 +1,6 @@
 package hr.foi.air.webservice
 
+import com.google.gson.Gson
 import com.squareup.okhttp.OkHttpClient
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
@@ -56,6 +57,7 @@ class MyWebserviceCaller {
                             if(response.isSuccess()){
                                 if(entityType == Store::class.java){
                                     println("Got stores...")
+                                    processStoreResponse(response)
                                 }else if(entityType==Discount::class.java){
                                     println("Got discounts")
                                 }else{
@@ -69,6 +71,21 @@ class MyWebserviceCaller {
                 }
 
             })
+        }
+    }
+
+    private fun processStoreResponse(response: Response<MyWebserviceResponse>){
+        val gson: Gson = Gson()
+        val storeItem: Array<Store>? = gson?.fromJson(
+                response.body().items, Array<Store>::class.java
+        )
+
+        if (storeItem != null) {
+            myWebserviceHandler?.onDataArrived<Store>(
+                storeItem.toList(),
+                true,
+                response.body().timeStamp
+            )
         }
 
     }
