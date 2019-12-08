@@ -1,6 +1,7 @@
 package hr.foi.air.webservice
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.squareup.okhttp.OkHttpClient
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
@@ -88,6 +89,24 @@ class MyWebserviceCaller {
             )
         }
 
+    }
+
+    private fun processDiscountResponse(response: Response<MyWebserviceResponse>){
+        val gson: Gson = GsonBuilder()
+            .setDateFormat("yyy-MM-dd")
+            .create()
+
+        val discountItem: Array<Discount>? = gson?.fromJson(
+            response.body().items, Array<Discount>::class.java
+        )
+
+        if (discountItem != null) {
+            myWebserviceHandler?.onDataArrived<Discount>(
+                discountItem.toList(),
+                true,
+                response.body().timeStamp
+            )
+        }
     }
 
 }
