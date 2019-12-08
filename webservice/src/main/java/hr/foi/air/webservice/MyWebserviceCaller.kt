@@ -25,7 +25,17 @@ class MyWebserviceCaller {
     fun getAll(method: String, entityType: Type) {
 
         val serviceCaller: MyWebservice? = retrofit?.create(MyWebservice::class.java)
-        val call: Call<MyWebserviceResponse>? = serviceCaller?.getStores(method)
+        var call: Call<MyWebserviceResponse>? = null
+
+        if(entityType==Store::class.java){
+            if (serviceCaller != null) {
+                call = serviceCaller.getStores(method)
+            }
+        }else{
+            if (serviceCaller != null) {
+                call = serviceCaller.getDiscounts(method)
+            }
+        }
 
         if(call != null){
             call.enqueue(object: Callback <MyWebserviceResponse>{
