@@ -1,8 +1,11 @@
 package hr.foi.air.webservice
 
 import com.squareup.okhttp.OkHttpClient
-import retrofit.GsonConverterFactory
-import retrofit.Retrofit
+import hr.foi.air.database.entities.Discount
+import hr.foi.air.database.entities.Store
+import hr.foi.air.webservice.responses.MyWebserviceResponse
+import retrofit.*
+import java.lang.Exception
 import java.lang.reflect.Type
 
 class MyWebserviceCaller {
@@ -20,7 +23,40 @@ class MyWebserviceCaller {
     }
 
     fun getAll(method: String, entityType: Type) {
-        
+
+        val serviceCaller: MyWebservice? = retrofit?.create(MyWebservice::class.java)
+        val call: Call<MyWebserviceResponse>? = serviceCaller?.getStores(method)
+
+        if(call != null){
+            call.enqueue(object: Callback <MyWebserviceResponse>{
+                override fun onFailure(t: Throwable?) {
+                    t?.printStackTrace()
+                }
+
+                override fun onResponse(
+                    response: Response<MyWebserviceResponse>?,
+                    retrofit: Retrofit?
+                ) {
+                    try{
+                        if (response != null) {
+                            if(response.isSuccess()){
+                                if(entityType == Store::class.java){
+                                    println("Got stores...")
+                                }else if(entityType==Discount::class.java){
+                                    println("Got discounts")
+                                }else{
+                                    println("Unrecognized class")
+                                }
+                            }
+                        }
+                    }catch (ex: Exception){
+                        ex.printStackTrace()
+                    }
+                }
+
+            })
+        }
+
     }
 
 }
