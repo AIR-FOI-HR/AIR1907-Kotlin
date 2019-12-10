@@ -27,4 +27,7 @@ interface DAO {
 
     @Query("SELECT name FROM discounts")
     fun getDiscounts():List<String>
+
+    @Query("SELECT * FROM discounts")
+    fun loadAllDiscounts():List<Discount>
 }

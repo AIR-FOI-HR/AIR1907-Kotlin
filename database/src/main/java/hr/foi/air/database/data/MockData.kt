@@ -9,7 +9,7 @@ import hr.foi.air.database.entities.Store
 object MockData {
     private var dao:DAO? = null
 
-    fun writeAll(context: Context){
+    fun writeAll(context: Context?){
         dao = MyDatabase.getInstance(context)?.getDao()
         val acmeStore:Store = Store()
         acmeStore.name = "ACME store"

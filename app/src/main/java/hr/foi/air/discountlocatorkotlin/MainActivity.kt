@@ -13,7 +13,8 @@ import hr.foi.air.database.entities.Store
 
 class MainActivity : AppCompatActivity() {
 
-    var database:MyDatabase? = null
+    public var database:MyDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
