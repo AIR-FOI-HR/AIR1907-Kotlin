@@ -13,6 +13,7 @@ import hr.foi.air.database.data.MockData
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
 import hr.foi.air.discountlocatorkotlin.loaders.DbDataLoader
+import hr.foi.air.discountlocatorkotlin.loaders.WsDataLoader
 
 class MainActivity : AppCompatActivity(), DataLoadedListener {
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
         mListView = findViewById<ListView>(R.id.discount_list)
 
         button.setOnClickListener{
-            val dataLoader: DataLoader = DbDataLoader()
+            val dataLoader: DataLoader = WsDataLoader()
             dataLoader.loadData(this)
         }
 

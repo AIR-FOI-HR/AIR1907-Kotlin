@@ -23,8 +23,9 @@ class WsDataLoader : DataLoader {
         val storeCaller: MyWebserviceCaller = MyWebserviceCaller(storeHandler)
         val discountCaller: MyWebserviceCaller = MyWebserviceCaller(discountHandler)
 
-        storeCaller.getAll("getAll", Store::class.java)
         discountCaller.getAll("getAll", Discount::class.java)
+        storeCaller.getAll("getAll", Store::class.java)
+
     }
 
     override fun isDataLoaded(): Boolean {

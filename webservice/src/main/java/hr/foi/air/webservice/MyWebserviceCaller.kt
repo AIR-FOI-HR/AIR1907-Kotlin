@@ -61,6 +61,7 @@ class MyWebserviceCaller {
                                     processStoreResponse(response)
                                 }else if(entityType==Discount::class.java){
                                     println("Got discounts")
+                                    processDiscountResponse(response)
                                 }else{
                                     println("Unrecognized class")
                                 }
