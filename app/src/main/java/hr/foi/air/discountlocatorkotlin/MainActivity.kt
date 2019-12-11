@@ -6,12 +6,13 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import hr.foi.air.core.DataLoadedListener
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.data.MockData
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DataLoadedListener {
 
     public var database:MyDatabase? = null
 
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         database = MyDatabase.getInstance(this)
-        mockData();
+        mockData()
         val button = findViewById<Button>(R.id.test_button)
 
         val mListView: ListView = findViewById<ListView>(R.id.discount_list)
@@ -54,6 +55,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
+
+    }
 
 
 }
