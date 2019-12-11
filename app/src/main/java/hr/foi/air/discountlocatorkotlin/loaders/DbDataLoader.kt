@@ -13,7 +13,7 @@ class DbDataLoader : DataLoader {
     var dataLoaded: Boolean = false
 
     override fun loadData(listener: DataLoadedListener) {
-        val dao: DAO? = MainActivity().database?.getDao()
+        val dao: DAO? = MainActivity.database?.getDao()
         var stores: List<Store> = dao?.loadAllStores() ?: emptyList()
         var discounts: List<Discount> = dao?.loadAllDiscounts() ?: emptyList()
 

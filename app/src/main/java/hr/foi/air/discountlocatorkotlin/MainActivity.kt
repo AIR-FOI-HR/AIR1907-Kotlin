@@ -7,14 +7,21 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import hr.foi.air.core.DataLoadedListener
+import hr.foi.air.core.DataLoader
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.data.MockData
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
+import hr.foi.air.discountlocatorkotlin.loaders.DbDataLoader
 
 class MainActivity : AppCompatActivity(), DataLoadedListener {
 
-    public var database:MyDatabase? = null
+    companion object{
+        @JvmField
+        public var database:MyDatabase? = null
+    }
+
+    var mListView: ListView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,22 +30,18 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
         mockData()
         val button = findViewById<Button>(R.id.test_button)
 
-        val mListView: ListView = findViewById<ListView>(R.id.discount_list)
+        mListView = findViewById<ListView>(R.id.discount_list)
 
         button.setOnClickListener{
-            val discounts: List<String>? = database?.getDao()?.getDiscounts()
-            if(!discounts.isNullOrEmpty()) {
-                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, discounts)
-                mListView.adapter = adapter
-            }
+            val dataLoader: DataLoader = DbDataLoader()
+            dataLoader.loadData(this)
         }
 
     }
 
     private fun mockData() {
         val stores: List<Store>? = database?.getDao()?.loadAllStores()
-        if (stores != null) {
-            if(stores.isNotEmpty()){
+            if(stores != null && stores.isNotEmpty()){
                 for (store in stores){
                     Log.d("AirAir", store.name ?:"")
                     val discounts: List<Discount>? = database?.getDao()?.loadAllDiscountsByStore(store.id)
@@ -52,11 +55,20 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
             }else{
                 MockData.writeAll(this);
             }
-        }
+
     }
-
+    @SuppressWarnings("unchecked")
     override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
+        val listItems: MutableList<String> = ArrayList<String>()
 
+        if (discounts != null) {
+            for (discount in discounts){
+                listItems.add(discount.name)
+            }
+        }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems.toTypedArray())
+        mListView?.adapter = adapter
     }
 
 
