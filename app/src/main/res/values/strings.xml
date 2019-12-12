@@ -2,4 +2,8 @@
     <string name="app_name">DiscountLocator</string>
     <string name="helloworld">Hello World!</string>
     <string name="test_button">Test button</string>
+
+    <string name="store_image">Store image</string>
+    <string name="store_name">Store name</string>
+    <string name="store_desc">Store description or promo text that could be multiline</string>
 </resources>
