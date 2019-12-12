@@ -6,4 +6,8 @@
     <string name="store_image">Store image</string>
     <string name="store_name">Store name</string>
     <string name="store_desc">Store description or promo text that could be multiline</string>
+
+    <string name="discount_name">Discount name</string>
+    <string name="discount_desc">Discount description can be a very long text that will wrap into multiline automatically</string>
+    <string name="discount_value">20%</string>
 </resources>
