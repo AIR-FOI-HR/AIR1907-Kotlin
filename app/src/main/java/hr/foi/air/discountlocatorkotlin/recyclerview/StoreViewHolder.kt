@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.store_list_item.view.*
 
 class StoreViewHolder : ParentViewHolder<ExpandableStoreItem, Discount> {
 
-
     var storeName: TextView? = null
     var storeDesc: TextView? = null
     var storeImage: ImageView? = null
@@ -28,6 +27,5 @@ class StoreViewHolder : ParentViewHolder<ExpandableStoreItem, Discount> {
         storeName?.text = store.name
         storeDesc?.text = store.description
         Picasso.with(itemView.context).load(store.imgUrl).into(storeImage)
-
     }
 }
