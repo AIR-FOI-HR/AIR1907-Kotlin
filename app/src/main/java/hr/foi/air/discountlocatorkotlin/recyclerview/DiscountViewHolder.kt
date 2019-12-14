@@ -21,7 +21,7 @@ class DiscountViewHolder: ChildViewHolder<Discount> {
         discountValue = itemView.findViewById(R.id.discount_value)
     }
 
-    public fun bindToData(discount: Discount){
+    public fun BindToData(discount: Discount){
         discountName?.text = discount.name
         discountDesc?.text = discount.description
         discountValue?.text = (discount.discountValue).toString()
