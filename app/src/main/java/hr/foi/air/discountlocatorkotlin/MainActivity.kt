@@ -2,15 +2,24 @@ package hr.foi.air.discountlocatorkotlin
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import hr.foi.air.core.DataLoadedListener
 import hr.foi.air.core.DataLoader
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
 import hr.foi.air.discountlocatorkotlin.loaders.WsDataLoader
+import hr.foi.air.discountlocatorkotlin.recyclerview.ExpandableStoreItem
+import hr.foi.air.discountlocatorkotlin.recyclerview.StoreRecyclerAdapter
 
 
 class MainActivity : AppCompatActivity(), DataLoadedListener {
+
+    var recyclerView: RecyclerView?= null
+
+
+
 
     companion object{
         @JvmField
@@ -21,6 +30,9 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         database = MyDatabase.getInstance(this)
+
+        recyclerView = findViewById(R.id.main_recycler)
+        loadData()
     }
 
     fun loadData() {
@@ -30,7 +42,13 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
 
     @SuppressWarnings("unchecked")
     override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
+        val storeItems: MutableList<ExpandableStoreItem> = ArrayList()
+        for (s in stores!!) storeItems.add(
+            ExpandableStoreItem(s, discounts!!)
+        )
 
+        recyclerView?.adapter = StoreRecyclerAdapter(this, storeItems)
+        recyclerView?.layoutManager = LinearLayoutManager(this)
     }
 
 
