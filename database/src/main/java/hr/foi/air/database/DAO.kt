@@ -14,7 +14,7 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDiscounts(vararg discount: Discount):List<Long>
     @Update fun updateDiscounts(vararg discounts:Discount)
-    @Delete fun deleteDiscounts(vararg discounts:Discount)
+    @Delete fun deleteDiscounts(vararg discounts: Discount?)
 
     @Query("SELECT * FROM stores")
     fun loadAllStores():List<Store>
@@ -35,5 +35,5 @@ interface DAO {
     fun loadAllDiscounts():List<Discount>
 
     @Query("DELETE FROM stores WHERE id = :storeId")
-    fun deleteStoreById(storeId: Int)
+    fun deleteStoreById(storeId: Int?)
 }

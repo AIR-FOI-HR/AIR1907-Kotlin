@@ -30,7 +30,7 @@ class StoreRecyclerAdapter: ExpandableRecyclerAdapter<ExpandableStoreItem, Disco
     @NonNull
     override fun onCreateChildViewHolder(childViewGroup: ViewGroup, viewType: Int): DiscountViewHolder {
         val discountView: View = LayoutInflater.from(context).inflate(hr.foi.air.discountlocatorkotlin.R.layout.discount_list_item, childViewGroup, false)
-        return DiscountViewHolder(discountView)
+        return DiscountViewHolder(discountView, this)
     }
 
     override fun onBindParentViewHolder(parentViewHolder: StoreViewHolder, parentPosition: Int, parent: ExpandableStoreItem) {
