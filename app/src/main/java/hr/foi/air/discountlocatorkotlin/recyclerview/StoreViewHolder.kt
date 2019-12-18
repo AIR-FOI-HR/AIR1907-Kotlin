@@ -24,8 +24,11 @@ class StoreViewHolder : ParentViewHolder<ExpandableStoreItem, Discount> {
     }
 
     public fun BindToData(store:Store){
-        storeName?.text = store.name
-        storeDesc?.text = store.description
-        Picasso.with(itemView.context).load(store.imgUrl).into(storeImage)
+        if(store != null && storeName != null){
+            storeName?.text = store.name
+            storeDesc?.text = store.description
+            Picasso.with(itemView.context).load(store.imgUrl).into(storeImage)
+        }
+
     }
 }
