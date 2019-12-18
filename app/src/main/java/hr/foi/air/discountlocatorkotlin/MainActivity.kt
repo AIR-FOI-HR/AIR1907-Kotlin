@@ -1,11 +1,13 @@
 package hr.foi.air.discountlocatorkotlin
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.air.core.DataLoadedListener
@@ -14,15 +16,16 @@ import hr.foi.air.database.DAO
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
+import hr.foi.air.discountlocatorkotlin.helper.Util
 import hr.foi.air.discountlocatorkotlin.loaders.DataLoaderFactory
 import hr.foi.air.discountlocatorkotlin.recyclerview.ExpandableStoreItem
 import hr.foi.air.discountlocatorkotlin.recyclerview.StoreRecyclerAdapter
 
 
-class MainActivity : AppCompatActivity(), DataLoadedListener {
+class MainActivity : AppCompatActivity(), DataLoadedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     var recyclerView: RecyclerView?= null
-
+    private val util: Util =  Util()
 
 
 
@@ -34,6 +37,9 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        util.setLanguage(this)
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)
 
         recyclerView = findViewById(R.id.main_recycler)
@@ -83,6 +89,13 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
             this.startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if(key == "language"){
+            util.setLanguage(this)
+            this.recreate()
+        }
     }
 
 
