@@ -11,6 +11,7 @@
     <string name="discount_desc">Discount description can be a very long text that will wrap into multiline automatically</string>
     <string name="discount_value">20%</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="preferences">Preferences</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

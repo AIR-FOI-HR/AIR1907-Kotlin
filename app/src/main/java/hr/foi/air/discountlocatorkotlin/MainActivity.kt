@@ -1,6 +1,10 @@
 package hr.foi.air.discountlocatorkotlin
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,6 +69,20 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.preferences){
+            val intent: Intent = Intent(this, SettingsActivity::class.java)
+            this.startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
