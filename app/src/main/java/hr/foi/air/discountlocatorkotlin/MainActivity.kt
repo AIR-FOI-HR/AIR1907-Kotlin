@@ -9,6 +9,7 @@ import hr.foi.air.core.DataLoader
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
+import hr.foi.air.discountlocatorkotlin.loaders.DataLoaderFactory
 import hr.foi.air.discountlocatorkotlin.loaders.WsDataLoader
 import hr.foi.air.discountlocatorkotlin.recyclerview.ExpandableStoreItem
 import hr.foi.air.discountlocatorkotlin.recyclerview.StoreRecyclerAdapter
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
     }
 
     fun loadData() {
-        var dataLoader: DataLoader = WsDataLoader()
+        var dataLoader: DataLoader = DataLoaderFactory.getDataLoader()
         dataLoader.loadData(this)
     }
 
