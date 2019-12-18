@@ -17,13 +17,14 @@ class DbDataLoader : DataLoader {
         var stores: List<Store> = dao?.loadAllStores() ?: emptyList()
         var discounts: List<Discount> = dao?.loadAllDiscounts() ?: emptyList()
 
+        /*
         if(stores.size == 0){
             MockData.writeAll(null)
             stores = dao?.loadAllStores() ?: emptyList()
             discounts = dao?.loadAllDiscounts() ?: emptyList()
 
         }
-
+        */
         dataLoaded = true
         listener.onDataLoaded(stores, discounts)
     }

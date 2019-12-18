@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.air.core.DataLoadedListener
 import hr.foi.air.core.DataLoader
+import hr.foi.air.database.DAO
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
@@ -50,6 +51,21 @@ class MainActivity : AppCompatActivity(), DataLoadedListener {
 
         recyclerView?.adapter = StoreRecyclerAdapter(this, storeItems)
         recyclerView?.layoutManager = LinearLayoutManager(this)
+
+        val dao: DAO? = database?.getDao()
+        dao?.deleteStores()
+        dao?.deleteDiscounts()
+
+        for (store in stores){
+            dao?.insertStores(store)
+        }
+
+        if (discounts != null) {
+            for (discount in discounts){
+                dao?.insertDiscounts(discount)
+            }
+        }
+
     }
 
 

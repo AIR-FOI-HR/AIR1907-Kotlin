@@ -33,4 +33,7 @@ interface DAO {
 
     @Query("SELECT * FROM discounts")
     fun loadAllDiscounts():List<Discount>
+
+    @Query("DELETE FROM stores WHERE id = :storeId")
+    fun deleteStoreById(storeId: Int)
 }
