@@ -2,6 +2,7 @@ package hr.foi.air.discountlocatorkotlin
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.air.database.MyDatabase
+import hr.foi.air.discountlocatorkotlin.fragments.ListViewFragment
 import hr.foi.air.discountlocatorkotlin.helper.Util
 
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener {
 
     var recyclerView: RecyclerView?= null
     private val util: Util =  Util()
@@ -32,6 +34,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         util.setLanguage(this)
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)
+        showMainFragment()
+    }
+
+    private fun showMainFragment() {
+        supportFragmentManager.beginTransaction().replace(R.id.main_fragment, ListViewFragment()).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,6 +60,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             util.setLanguage(this)
             this.recreate()
         }
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

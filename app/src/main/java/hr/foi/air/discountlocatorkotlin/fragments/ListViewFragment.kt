@@ -48,6 +48,11 @@ class ListViewFragment : Fragment(), DataLoadedListener {
             param2 = it.getString(ARG_PARAM2)
         }
 
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerView = view?.findViewById(R.id.main_recycler)
         loadData()
     }
@@ -122,23 +127,23 @@ class ListViewFragment : Fragment(), DataLoadedListener {
 
     override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
         val storeItems: MutableList<ExpandableStoreItem> = ArrayList()
-        for (s in stores!!) storeItems.add(
-            ExpandableStoreItem(
-                s,
-                discounts!!
-            )
-        )
+        if (stores != null && discounts != null) {
+            for (s in stores)
+                storeItems.add(ExpandableStoreItem(s, discounts))
+        }
+        if(context != null){
+            recyclerView?.setAdapter(StoreRecyclerAdapter(context!!, storeItems))
+            recyclerView?.setLayoutManager(LinearLayoutManager(context))
+        }
 
-        recyclerView?.setAdapter(StoreRecyclerAdapter(context!!, storeItems))
-        recyclerView?.setLayoutManager(LinearLayoutManager(context))
-
-        //data storage
         //data storage
         val dao: DAO? = database?.getDao()
         dao?.deleteStores()
         dao?.deleteDiscounts()
 
-        for (s in stores) dao?.insertStores(s)
+        if (stores != null) {
+            for (s in stores) dao?.insertStores(s)
+        }
         if (discounts != null) {
             for (d in discounts) dao?.insertDiscounts(d)
         }
