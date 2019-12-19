@@ -10,12 +10,14 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import hr.foi.air.core.CurrentActivity
 import hr.foi.air.database.MyDatabase
+import hr.foi.air.discountlocatorkotlin.fragments.DiscountDetailsFragment
 import hr.foi.air.discountlocatorkotlin.fragments.ListViewFragment
 import hr.foi.air.discountlocatorkotlin.helper.Util
 
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener, DiscountDetailsFragment.OnFragmentInteractionListener {
 
     var recyclerView: RecyclerView?= null
     private val util: Util =  Util()
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        CurrentActivity.setActivity(this)
         util.setLanguage(this)
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)

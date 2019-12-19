@@ -1,15 +1,18 @@
 package hr.foi.air.discountlocatorkotlin.recyclerview
 
 import android.app.AlertDialog
-import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import com.bignerdranch.expandablerecyclerview.ChildViewHolder
+import hr.foi.air.core.CurrentActivity
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.discountlocatorkotlin.MainActivity
 import hr.foi.air.discountlocatorkotlin.R
+import hr.foi.air.discountlocatorkotlin.fragments.DiscountDetailsFragment
+
 
 class DiscountViewHolder: ChildViewHolder<Discount> {
 
@@ -27,7 +30,7 @@ class DiscountViewHolder: ChildViewHolder<Discount> {
         discountValue = itemView.findViewById(R.id.discount_value)
         itemView.setOnClickListener{
             Toast.makeText(it.context, selectedDiscount?.name, Toast.LENGTH_SHORT).show()
-
+            showDetailsFragment()
         }
 
         itemView.setOnLongClickListener {
@@ -63,6 +66,17 @@ class DiscountViewHolder: ChildViewHolder<Discount> {
 
             true
         }
+    }
+
+    private fun showDetailsFragment() {
+        var data: Bundle = Bundle()
+
+        data.putInt("id", selectedDiscount?.id!!)
+
+        val discountDetailsFragment = DiscountDetailsFragment()
+        discountDetailsFragment.arguments = data
+
+        CurrentActivity.getActivity()?.getSupportFragmentManager()?.beginTransaction()?.replace(R.id.main_fragment, discountDetailsFragment)?.commit()
     }
 
     public fun BindToData(discount: Discount){
