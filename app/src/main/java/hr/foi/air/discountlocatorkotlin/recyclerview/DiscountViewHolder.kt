@@ -27,7 +27,7 @@ class DiscountViewHolder: ChildViewHolder<Discount> {
         discountValue = itemView.findViewById(R.id.discount_value)
         itemView.setOnClickListener{
             Toast.makeText(it.context, selectedDiscount?.name, Toast.LENGTH_SHORT).show()
-            
+
         }
 
         itemView.setOnLongClickListener {
