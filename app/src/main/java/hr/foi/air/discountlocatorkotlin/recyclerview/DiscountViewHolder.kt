@@ -76,7 +76,7 @@ class DiscountViewHolder: ChildViewHolder<Discount> {
         val discountDetailsFragment = DiscountDetailsFragment()
         discountDetailsFragment.arguments = data
 
-        CurrentActivity.getActivity()?.getSupportFragmentManager()?.beginTransaction()?.replace(R.id.main_fragment, discountDetailsFragment)?.commit()
+        CurrentActivity.getActivity()?.getSupportFragmentManager()?.beginTransaction()?.replace(R.id.main_fragment, discountDetailsFragment)?.addToBackStack("")?.commit()
     }
 
     public fun BindToData(discount: Discount){
