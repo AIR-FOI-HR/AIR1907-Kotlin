@@ -8,21 +8,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import hr.foi.air.core.DataLoadedListener
-import hr.foi.air.core.DataLoader
-import hr.foi.air.database.DAO
 import hr.foi.air.database.MyDatabase
-import hr.foi.air.database.entities.Discount
-import hr.foi.air.database.entities.Store
 import hr.foi.air.discountlocatorkotlin.helper.Util
-import hr.foi.air.discountlocatorkotlin.loaders.DataLoaderFactory
-import hr.foi.air.discountlocatorkotlin.recyclerview.ExpandableStoreItem
-import hr.foi.air.discountlocatorkotlin.recyclerview.StoreRecyclerAdapter
 
 
-class MainActivity : AppCompatActivity(), DataLoadedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     var recyclerView: RecyclerView?= null
     private val util: Util =  Util()
@@ -41,40 +32,6 @@ class MainActivity : AppCompatActivity(), DataLoadedListener, SharedPreferences.
         util.setLanguage(this)
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)
-
-        recyclerView = findViewById(R.id.main_recycler)
-        loadData()
-    }
-
-    fun loadData() {
-        var dataLoader: DataLoader = DataLoaderFactory.getDataLoader()
-        dataLoader.loadData(this)
-    }
-
-    @SuppressWarnings("unchecked")
-    override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
-        val storeItems: MutableList<ExpandableStoreItem> = ArrayList()
-        for (s in stores!!) storeItems.add(
-            ExpandableStoreItem(s, discounts!!)
-        )
-
-        recyclerView?.adapter = StoreRecyclerAdapter(this, storeItems)
-        recyclerView?.layoutManager = LinearLayoutManager(this)
-
-        val dao: DAO? = database?.getDao()
-        dao?.deleteStores()
-        dao?.deleteDiscounts()
-
-        for (store in stores){
-            dao?.insertStores(store)
-        }
-
-        if (discounts != null) {
-            for (discount in discounts){
-                dao?.insertDiscounts(discount)
-            }
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
