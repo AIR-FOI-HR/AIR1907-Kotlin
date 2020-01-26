@@ -10,15 +10,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import hr.foi.air.core.DataLoadedListener
-import hr.foi.air.core.DataLoader
 import hr.foi.air.core.DataPresenter
-import hr.foi.air.database.DAO
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
-import hr.foi.air.discountlocatorkotlin.MainActivity.Companion.database
 import hr.foi.air.discountlocatorkotlin.R
-import hr.foi.air.discountlocatorkotlin.loaders.DataLoaderFactory
 import hr.foi.air.discountlocatorkotlin.recyclerview.ExpandableStoreItem
 import hr.foi.air.discountlocatorkotlin.recyclerview.StoreRecyclerAdapter
 
@@ -36,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ListViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
+class ListViewModule : Fragment(), DataPresenter {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -61,7 +56,6 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view?.findViewById(R.id.main_recycler)
-        loadData()
         moduleReadyFlag = true
         tryToDisplayData()
     }
@@ -73,12 +67,16 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
     }
 
     private fun displayData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        val storeItems: MutableList<ExpandableStoreItem> = ArrayList()
+        for (s in stores!!) storeItems.add(
+            ExpandableStoreItem(
+                s,
+                discounts!!
+            )
+        )
 
-    private fun loadData() {
-        val dataLoader: DataLoader = DataLoaderFactory.getDataLoader()
-        dataLoader.loadData(this)
+        recyclerView!!.adapter = StoreRecyclerAdapter(context!!, storeItems)
+        recyclerView!!.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreateView(
@@ -142,30 +140,6 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    override fun onDataLoaded(stores: List<Store>?, discounts: List<Discount>?) {
-        val storeItems: MutableList<ExpandableStoreItem> = ArrayList()
-        if (stores != null && discounts != null) {
-            for (s in stores)
-                storeItems.add(ExpandableStoreItem(s, discounts))
-        }
-        if(context != null){
-            recyclerView?.setAdapter(StoreRecyclerAdapter(context!!, storeItems))
-            recyclerView?.setLayoutManager(LinearLayoutManager(context))
-        }
-
-        //data storage
-        val dao: DAO? = database?.getDao()
-        dao?.deleteStores()
-        dao?.deleteDiscounts()
-
-        if (stores != null) {
-            for (s in stores) dao?.insertStores(s)
-        }
-        if (discounts != null) {
-            for (d in discounts) dao?.insertDiscounts(d)
-        }
     }
 
     override fun getIcon(context: Context): Drawable {
