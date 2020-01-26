@@ -1,4 +1,4 @@
-package hr.foi.air.discountlocatorkotlin.fragments
+package hr.foi.air.discountlocatorkotlin.modules
 
 import android.content.Context
 import android.net.Uri
@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ListViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListViewFragment : Fragment(), DataLoadedListener {
+class ListViewModule : Fragment(), DataLoadedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -117,7 +117,7 @@ class ListViewFragment : Fragment(), DataLoadedListener {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ListViewFragment().apply {
+            ListViewModule().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

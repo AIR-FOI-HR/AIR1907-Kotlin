@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -18,11 +17,11 @@ import com.google.android.material.navigation.NavigationView
 import hr.foi.air.core.CurrentActivity
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.discountlocatorkotlin.fragments.DiscountDetailsFragment
-import hr.foi.air.discountlocatorkotlin.fragments.ListViewFragment
 import hr.foi.air.discountlocatorkotlin.helper.Util
+import hr.foi.air.discountlocatorkotlin.modules.ListViewModule
 
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener, DiscountDetailsFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewModule.OnFragmentInteractionListener, DiscountDetailsFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     var recyclerView: RecyclerView?= null
     private val util: Util =  Util()
@@ -63,7 +62,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun showMainFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.main_fragment, ListViewFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.main_fragment,
+            ListViewModule()
+        ).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
