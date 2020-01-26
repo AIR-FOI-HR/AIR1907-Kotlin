@@ -1,6 +1,7 @@
 package hr.foi.air.discountlocatorkotlin.modules
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.foi.air.core.DataLoadedListener
 import hr.foi.air.core.DataLoader
+import hr.foi.air.core.DataPresenter
 import hr.foi.air.database.DAO
 import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
@@ -34,12 +36,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ListViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ListViewModule : Fragment(), DataLoadedListener {
+class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var recyclerView: RecyclerView? = null
+    private var stores: List<Store>? = null
+    private var discounts: List<Discount>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,5 +151,22 @@ class ListViewModule : Fragment(), DataLoadedListener {
         if (discounts != null) {
             for (d in discounts) dao?.insertDiscounts(d)
         }
+    }
+
+    override fun getIcon(context: Context): Drawable {
+        return context.getDrawable(android.R.drawable.ic_menu_agenda)!!
+    }
+
+    override fun getName(context: Context): String {
+        return context.getString(R.string.list_view)
+    }
+
+    override fun getFragment(): Fragment {
+        return this
+    }
+
+    override fun setData(stores: List<Store>, discounts: List<Discount>) {
+        this.discounts = discounts
+        this.stores = stores
     }
 }

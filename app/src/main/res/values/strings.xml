@@ -35,4 +35,6 @@
     <string name="menu_map" translatable="false">Map view</string>
     <string name="menu_about" translatable="false">About app</string>
     <string name="additional" translatable="false">Additional</string>
+
+    <string name="list_view" translatable="false">List View</string>
 </resources>
