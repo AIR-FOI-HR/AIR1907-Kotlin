@@ -45,6 +45,9 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
     private var stores: List<Store>? = null
     private var discounts: List<Discount>? = null
 
+    private var moduleReadyFlag: Boolean = false
+    private var dataReadyFlag: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -59,6 +62,18 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view?.findViewById(R.id.main_recycler)
         loadData()
+        moduleReadyFlag = true
+        tryToDisplayData()
+    }
+
+    private fun tryToDisplayData() {
+        if(moduleReadyFlag && dataReadyFlag){
+            displayData()
+        }
+    }
+
+    private fun displayData() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun loadData() {
@@ -168,5 +183,8 @@ class ListViewModule : Fragment(), DataLoadedListener, DataPresenter {
     override fun setData(stores: List<Store>, discounts: List<Discount>) {
         this.discounts = discounts
         this.stores = stores
+
+        dataReadyFlag = true
+        tryToDisplayData()
     }
 }
