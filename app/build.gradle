@@ -41,6 +41,7 @@ dependencies {
     implementation project(path: ':database')
     implementation project(path: ':webservice')
     implementation project(path: ':core')
+    implementation project(path: ':map')
 
     //expandable recyclerview and cardview
     def recyclerview_version = "1.0.0"
