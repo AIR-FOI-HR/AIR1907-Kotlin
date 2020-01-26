@@ -21,7 +21,7 @@
 
         <EditTextPreference
             app:key="username"
-            app:title="@string/usename_title"
+            app:title="@string/username_title"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

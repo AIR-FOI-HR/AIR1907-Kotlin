@@ -7,9 +7,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import hr.foi.air.core.CurrentActivity
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.discountlocatorkotlin.fragments.DiscountDetailsFragment
@@ -17,12 +22,14 @@ import hr.foi.air.discountlocatorkotlin.fragments.ListViewFragment
 import hr.foi.air.discountlocatorkotlin.helper.Util
 
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener, DiscountDetailsFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener, ListViewFragment.OnFragmentInteractionListener, DiscountDetailsFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     var recyclerView: RecyclerView?= null
     private val util: Util =  Util()
-
-
+    var toolbar: androidx.appcompat.widget.Toolbar? = null
+    var drawerLayout: DrawerLayout? = null
+    var drawerToggle: ActionBarDrawerToggle? = null
+    var navigationView: NavigationView? = null
 
     companion object{
         @JvmField
@@ -36,7 +43,23 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         util.setLanguage(this)
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)
+        initializeLayout()
         showMainFragment()
+    }
+
+    private fun initializeLayout() {
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout?.addDrawerListener(drawerToggle!!)
+        drawerToggle!!.syncState()
+
+        navigationView = findViewById(R.id.nav_view)
+        navigationView!!.setNavigationItemSelectedListener(this)
+
+
     }
 
     private fun showMainFragment() {
@@ -66,6 +89,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+
+        drawerLayout?.closeDrawer(GravityCompat.START)
+        return true
     }
 
 
