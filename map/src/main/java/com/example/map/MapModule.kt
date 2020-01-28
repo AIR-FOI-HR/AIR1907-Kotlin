@@ -18,7 +18,7 @@ import hr.foi.air.database.entities.Discount
 import hr.foi.air.database.entities.Store
 import hr.foi.air.map.R
 
-class MapModule : Fragment(), OnMapReadyCallback, DataPresenter {
+class MapModule : Fragment(), DataPresenter {
 
     var map: GoogleMap? = null
     var mapFragment: SupportMapFragment? = null
@@ -40,15 +40,16 @@ class MapModule : Fragment(), OnMapReadyCallback, DataPresenter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
+        mapFragment?.getMapAsync(object : OnMapReadyCallback{
+            override fun onMapReady(googleMap: GoogleMap?) {
+                map = googleMap
+                moduleReadyFlag = true
+                tryToDisplayData()
+            }
+
+        })
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-
-        moduleReadyFlag = true
-        tryToDisplayData()
-    }
 
     private fun tryToDisplayData() {
         if(moduleReadyFlag && dataReadyFlag){
