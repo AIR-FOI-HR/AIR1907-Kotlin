@@ -1,12 +1,18 @@
 package hr.foi.air.discountlocatorkotlin.managers
 
 import android.provider.ContactsContract
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.map.MapModule
 import com.google.android.material.navigation.NavigationView
 import hr.foi.air.core.DataPresenter
+import hr.foi.air.discountlocatorkotlin.R
 import hr.foi.air.discountlocatorkotlin.modules.ListViewModule
+import kotlinx.android.synthetic.main.content_main.view.*
 
 class DataPresenterManager {
 
@@ -46,6 +52,32 @@ class DataPresenterManager {
                 ?.setIcon(module.getIcon(
                     this!!.activity!!
                 ))?.setCheckable(true)
+        }
+    }
+
+    fun startMainModule(){
+        var mainModule: DataPresenter? = modules?.get(0) ?: null
+        if(mainModule != null){
+            startModule(mainModule)
+        }
+    }
+
+    private fun startModule(module: DataPresenter) {
+        var fragmentManager: FragmentManager? = activity?.supportFragmentManager
+        fragmentManager?.beginTransaction()?.replace(R.id.main_fragment, module.getFragment())
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)?.commit()
+        DataLoaderManager.getInstance().sendData(module)
+    }
+
+    fun selectNavigationItem(menuItem: MenuItem){
+        if(!menuItem.isChecked){
+            menuItem.setChecked(true)
+            drawerLayout?.closeDrawer(GravityCompat.START)
+
+            var module: DataPresenter? = modules?.get(menuItem.itemId)
+            if (module != null) {
+                startModule(module)
+            }
         }
     }
 }

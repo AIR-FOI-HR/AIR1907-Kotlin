@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -44,7 +45,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
         database = MyDatabase.getInstance(this)
         initializeLayout()
-        showMainFragment()
         initializeDataPresenterManager()
     }
 
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val dataPresenterManager: DataPresenterManager = DataPresenterManager.getInstance()
         dataPresenterManager.setDrawerDependencies(this, this!!.navigationView!!,
             this!!.drawerLayout!!, R.id.dynamic_group)
+        dataPresenterManager.startMainModule()
     }
 
     private fun initializeLayout() {
@@ -69,11 +70,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     }
 
-    private fun showMainFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.main_fragment,
-            ListViewModule()
-        ).commit()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -100,8 +96,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when(menuItem.itemId){
+            R.id.menu_about -> Log.d("AirAir", "Hello")
+            else -> DataPresenterManager.getInstance().selectNavigationItem(menuItem)
+        }
         drawerLayout?.closeDrawer(GravityCompat.START)
         return true
     }
