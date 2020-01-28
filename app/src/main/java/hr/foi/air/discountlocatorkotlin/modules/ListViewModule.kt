@@ -55,7 +55,7 @@ class ListViewModule : Fragment(), DataPresenter {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view?.findViewById(R.id.main_recycler)
+        recyclerView = view.findViewById(R.id.main_recycler)
         moduleReadyFlag = true
         tryToDisplayData()
     }
@@ -154,7 +154,7 @@ class ListViewModule : Fragment(), DataPresenter {
         return this
     }
 
-    override fun setData(stores: List<Store>, discounts: List<Discount>) {
+    override fun setData(stores: List<Store>?, discounts: List<Discount>?) {
         this.discounts = discounts
         this.stores = stores
 

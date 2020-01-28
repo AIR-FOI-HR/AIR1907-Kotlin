@@ -85,8 +85,8 @@ class MapModule : Fragment(), OnMapReadyCallback, DataPresenter {
     }
 
     override fun setData(
-        stores: List<hr.foi.air.database.entities.Store>,
-        discounts: List<hr.foi.air.database.entities.Discount>
+        stores: List<Store>?,
+        discounts: List<Discount>?
     ) {
         this.stores = stores
         this.discounts = discounts

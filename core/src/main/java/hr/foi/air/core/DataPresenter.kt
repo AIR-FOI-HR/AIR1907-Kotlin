@@ -10,5 +10,5 @@ interface DataPresenter {
     fun getIcon(context: Context): Drawable
     fun getName(context: Context): String
     fun getFragment(): Fragment
-    fun setData(stores: List<Store>, discounts: List<Discount>)
+    fun setData(stores: List<Store>?, discounts: List<Discount>?)
 }
