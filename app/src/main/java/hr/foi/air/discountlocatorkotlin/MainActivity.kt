@@ -18,6 +18,7 @@ import hr.foi.air.core.CurrentActivity
 import hr.foi.air.database.MyDatabase
 import hr.foi.air.discountlocatorkotlin.fragments.DiscountDetailsFragment
 import hr.foi.air.discountlocatorkotlin.helper.Util
+import hr.foi.air.discountlocatorkotlin.managers.DataPresenterManager
 import hr.foi.air.discountlocatorkotlin.modules.ListViewModule
 
 
@@ -44,6 +45,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         database = MyDatabase.getInstance(this)
         initializeLayout()
         showMainFragment()
+        initializeDataPresenterManager()
+    }
+
+    private fun initializeDataPresenterManager() {
+        val dataPresenterManager: DataPresenterManager = DataPresenterManager.getInstance()
+        dataPresenterManager.setDrawerDependencies(this, this!!.navigationView!!,
+            this!!.drawerLayout!!, R.id.dynamic_group)
     }
 
     private fun initializeLayout() {

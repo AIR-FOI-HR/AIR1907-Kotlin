@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_list"
-            android:icon="@android:drawable/ic_menu_agenda"
-            android:title="@string/menu_list" />
-        <item
-            android:id="@+id/nav_map"
-            android:icon="@android:drawable/ic_menu_mylocation"
-            android:title="@string/menu_map" />
+    <group
+        android:id="@+id/dynamic_group"
+        android:checkableBehavior="single"
+        android:orderInCategory="0">
+
     </group>
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/static_group"
+        android:checkableBehavior="none"
+        android:orderInCategory="100">
         <item android:title="@string/additional">
             <menu>
                 <item

@@ -16,7 +16,7 @@
     <string name="app_header">Application settings</string>
 
     <!-- Users Preferences -->
-    <string name="username_title" translatable="false">Username</string>
+    <string name="username_title">Username</string>
 
     <!-- Apps Preferences -->
     <string name="sync_title">Sync data on app startup</string>
@@ -25,16 +25,13 @@
     <string name="webservice_title">Load data from webservice by default</string>
 
     <!-- Navigation drawer -->
-    <string name="navigation_drawer_open" translatable="false">Open drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close drawer</string>
+    <string name="navigation_drawer_open">Open drawer</string>
+    <string name="navigation_drawer_close">Close drawer</string>
 
-    <string name="nav_header_title" translatable="false">Discount Locator</string>
-    <string name="nav_header_info" translatable="false">foi@foi.hr</string>
+    <string name="nav_header_title">Discount Locator</string>
+    <string name="nav_header_info">foi@foi.hr</string>
 
-    <string name="menu_list" translatable="false">List view</string>
-    <string name="menu_map" translatable="false">Map view</string>
-    <string name="menu_about" translatable="false">About app</string>
-    <string name="additional" translatable="false">Additional</string>
-
-    <string name="list_view" translatable="false">List View</string>
+    <string name="menu_about">About app</string>
+    <string name="additional">Additional</string>
+    <string name="list_view">List view</string>
 </resources>
